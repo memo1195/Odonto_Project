@@ -1,0 +1,7 @@
+{
+    "python.pythonPath": "/Users/catalan/.local/share/virtualenvs/Flask-X58XgFND/bin/python",
+    "python.poetryPath": "",
+    "python.linting.pylintEnabled": true,
+    "python.linting.pylintArgs": ["--load-plugins", "pylint-flask"],
+    "python.linting.enabled": true,
+}

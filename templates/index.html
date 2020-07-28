@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Agenda tu cita ahora</title>
+{% endblock %}
+
+{% block body %}
+
+
+    <!-- Header -->
+    <header class="main-header">
+        <div class="background-overlay text-white py-5">
+            <br>
+            <div class="container">
+                <h1>Agende su cita ahora mismo.</h1>
+                <br>              
+            </div>
+            <div class="container">
+                <div class="row d-flex h-50">
+                    
+                    <!-- Parte Izquierda Header -->
+                    <div class="col-sm-6 text-center justify-content-center align-self-center">
+
+                        <!--Formulario-->
+                            <form id="headerform">
+                                <div class="form-group py-4">
+
+                                    <!-- Nombre -->
+                                    <label for="namef1">Nombre completo: </label>
+                                    <input type="name" class="form-control" placeholder="Escriba su nombre aqui" id="namef1">
+                                </div>
+                                <div class="form-group">
+
+                                    <!-- Tratamiento -->
+                                    <label for="treatf1">Tratamiento: </label>
+                                    <select class="form-control" id="treatf1">
+                                        {% for tratamiento in tratamientos %}
+                                            <option>{{tratamiento.nombre}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div> 
+
+                                <!-- Submit -->
+                                <button type="button"  class="btn btn-primary" id="button-modal" data-toggle="modal" data-target="#agendacita">Solicitar cita</button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="agendacita" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel"> Datos de la cita </h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+
+                                            </div>
+                                            
+                                            <!--Cuerpo del modal-->
+                                            <div class="modal-body">
+                                                <h6>Completa los datos para confirmar la cita</h6>
+                                                <br>
+                                                <form id="headerform" action="php/agendacita.php" method="POST">
+                                                    <div class="form-group">
+
+                                                        <!-- Nombre modal -->
+                                                        <label for="name">Nombre completo: </label>
+                                                        <input type="name" class="form-control" placeholder="Escriba su nombre aqui" id="name">
+                                                    </div>
+
+                                                    <div class="form-group">
+
+                                                        <!-- Tratamiento modal -->
+                                                        <label for="treat">Tratamiento: </label>
+                                                        <select class="form-control" id="treat">
+                                                            {% for tratamiento in tratamientos %}
+                                                                <option>{{tratamiento.nombre}}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div> 
+
+                                                    <!-- Tel -->
+                                                    <div class="form-group">
+                                                        <label for="tel">Numero telefonico: </label>
+                                                        <input type="tel" class="form-control" id="tel" placeholder="Numero telefonico" autofocus>
+                                                    </div>
+                        
+                                                    <!--Estado-->
+                                                    <div class="form-group" id="state">
+                                                        <label for="estado">Estado: </label>
+                                                        <select class="form-control" id="state">
+                                                            <option disabled selected>Selecciona un estado</option>
+                                                            {% for estado in estados %}
+                                                                <option>{{estado.nombre}}</option>
+                                                            {% endfor %}                           
+                                                        </select>
+                                                    </div> 
+                                                </form>          
+                                            </div>
+                                            
+                                            <!-- Submit modal -->
+                                            <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">Confirmar cita</button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>               
+                            </form>
+                    </div>
+
+                    <!-- Parte derecha Header -->
+                    <div class="col-sm-6 text-center justify-content-center align-self-center">
+                    <button type="button" class="btn btn-primary btn-lg btn-block">¿Buscas paciente?</button>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </header>
+
+    
+
+{% endblock %}
