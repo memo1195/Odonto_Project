@@ -3,14 +3,11 @@
     opacity: 0.9;
   }
   
-.main-header {
-    background: url({{ url_for('static', filename='img/boychk.jpg') }});
+  .main-header {
+    background: url('/static/img/boychk.jpg');
     background-size: cover;
     background-position: center
-
-    
 }
-  
 .background-overlay {
     background: rgba(41, 128, 185,.6);
     top: 0;
@@ -32,7 +29,5 @@ footer {
     color: rgba(83, 137, 173,.9);
 }
 
-p {
-    font-family: Verdana;
-  }
+
  
