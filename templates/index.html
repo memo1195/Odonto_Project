@@ -63,15 +63,15 @@
                                                     <div class="form-group">
 
                                                         <!-- Nombre modal -->
-                                                        <label for="name">Nombre completo: </label>
-                                                        <input type="name" class="form-control" placeholder="Escriba su nombre aqui" id="name">
+                                                        <label for="nombre_paciente">Nombre completo: </label>
+                                                        <input type="name" class="form-control" placeholder="Escriba su nombre aqui" id="nombre_paciente">
                                                     </div>
 
                                                     <div class="form-group">
 
                                                         <!-- Tratamiento modal -->
-                                                        <label for="treat">Tratamiento: </label>
-                                                        <select class="form-control" id="treat">
+                                                        <label for="tratamiento_id">Tratamiento: </label>
+                                                        <select class="form-control" id="tratamiento_id">
                                                             {% for tratamiento in tratamientos %}
                                                                 <option>{{tratamiento.nombre}}</option>
                                                             {% endfor %}
@@ -80,14 +80,14 @@
 
                                                     <!-- Tel -->
                                                     <div class="form-group">
-                                                        <label for="tel">Numero telefonico: </label>
-                                                        <input type="tel" class="form-control" id="tel" placeholder="Numero telefonico" autofocus>
+                                                        <label for="tel_paciente">Numero telefonico: </label>
+                                                        <input type="tel" class="form-control" id="tel_paciente" placeholder="Numero telefonico" autofocus>
                                                     </div>
                         
                                                     <!--Estado-->
-                                                    <div class="form-group" id="state">
+                                                    <div class="form-group" id="estado_id">
                                                         <label for="estado">Estado: </label>
-                                                        <select class="form-control" id="state">
+                                                        <select class="form-control" id="estado_id">
                                                             <option disabled selected>Selecciona un estado</option>
                                                             {% for estado in estados %}
                                                                 <option>{{estado.nombre}}</option>
