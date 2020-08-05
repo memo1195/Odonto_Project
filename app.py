@@ -10,6 +10,7 @@ db = SQLAlchemy(app)
 
 # Model
 
+# Tratamiento
 class Tratamiento(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(50), unique=True, nullable =False)
@@ -17,12 +18,46 @@ class Tratamiento(db.Model):
     def __repr__(self):
         return 'Tratamiento id: ' + str(self.id)
 
+# Estado
 class Estado(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(50), unique=True, nullable =False)
 
     def __repr__(self):
         return 'Estado id: ' + str(self.id)
+
+# Lugar
+class Lugar(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(50), unique=True, nullable =False)
+    estado_id = db.Column(db.Integer, nullable=False)
+
+    def __repr__(self):
+        return 'Lugar id: ' + str(self.id)
+
+# Cita
+class Cita(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    dentista_id = db.Column(db.Integer)
+    nombre_paciente = db.Column(db.String(50), nullable=False)
+    tel_paciente = db.Column(db.Integer, nullable=False)
+    status = db.Column(db.Integer, nullable=False, default=0)
+    estado_id = db.Column(db.Integer, nullable=False)
+    lugar = db.Column(db.String(50))
+    tratamiento_id = db.Column(db.Integer, nullable=False)
+
+    def __repr__(self):
+        return 'Cita id: ' + str(self.id)
+
+# Dentista
+class Dentista(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(50), nullable=False)
+    tel = db.Column(db.String(20), nullable=False)
+
+
+    def __repr__(self):
+        return 'Dentista id: ' + str(self.id)
 
 
 db.create_all()
@@ -35,13 +70,6 @@ def index():
 
     return render_template('index.html',tratamientos=tratamientos,estados=estados)
 
-@app.route('/faq')
-def faq():
-    return render_template('faq.html')
-
-@app.route('/contacto')
-def contacto():
-    return render_template('contacto.html')
 
 if __name__ == "__main__":
     app.run(debug=True)
