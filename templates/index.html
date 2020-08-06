@@ -22,7 +22,7 @@
                     <div class="col-sm-6 text-center justify-content-center align-self-center">
 
                         <!--Formulario-->
-                            <form id="headerform">
+                            <form id="headerform" action='/' method='POST' >
                                 <div class="form-group py-4">
 
                                     <!-- Nombre -->
@@ -59,19 +59,19 @@
                                             <div class="modal-body">
                                                 <h6>Completa los datos para confirmar la cita</h6>
                                                 <br>
-                                                <form id="headerform" action="php/agendacita.php" method="POST">
+                                                <form id="headerform">
                                                     <div class="form-group">
 
                                                         <!-- Nombre modal -->
                                                         <label for="nombre_paciente">Nombre completo: </label>
-                                                        <input type="name" class="form-control" placeholder="Escriba su nombre aqui" id="nombre_paciente">
+                                                        <input type="name" class="form-control" placeholder="Escriba su nombre aqui" id="nombre_paciente", name="nombre_paciente">
                                                     </div>
 
                                                     <div class="form-group">
 
                                                         <!-- Tratamiento modal -->
                                                         <label for="tratamiento_id">Tratamiento: </label>
-                                                        <select class="form-control" id="tratamiento_id">
+                                                        <select class="form-control" id="tratamiento_id", name="tratamiento_id">
                                                             {% for tratamiento in tratamientos %}
                                                                 <option>{{tratamiento.nombre}}</option>
                                                             {% endfor %}
@@ -81,20 +81,20 @@
                                                     <!-- Tel -->
                                                     <div class="form-group">
                                                         <label for="tel_paciente">Numero telefonico: </label>
-                                                        <input type="tel" class="form-control" id="tel_paciente" placeholder="Numero telefonico" autofocus>
+                                                        <input type="tel" class="form-control" id="tel_paciente" placeholder="Numero telefonico" autofocus, name="tel_paciente">
                                                     </div>
                         
                                                     <!--Estado-->
                                                     <div class="form-group" id="estado_id">
                                                         <label for="estado">Estado: </label>
-                                                        <select class="form-control" id="estado_id">
+                                                        <select class="form-control" id="estado_id", name="estado_id">
                                                             <option disabled selected>Selecciona un estado</option>
                                                             {% for estado in estados %}
                                                                 <option>{{estado.nombre}}</option>
                                                             {% endfor %}                           
                                                         </select>
                                                     </div> 
-                                                </form>          
+                                                </form> 
                                             </div>
                                             
                                             <!-- Submit modal -->
@@ -117,5 +117,6 @@
             </div>
         </div>
     </header>
+
 
 {% endblock %}

@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 
 # App Config
@@ -39,12 +39,12 @@ class Lugar(db.Model):
 class Cita(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     dentista_id = db.Column(db.Integer)
-    nombre_paciente = db.Column(db.String(50), nullable=False)
-    tel_paciente = db.Column(db.Integer, nullable=False)
-    status = db.Column(db.Integer, nullable=False, default=0)
-    estado_id = db.Column(db.Integer, nullable=False)
+    nombre_paciente = db.Column(db.String(50))
+    tel_paciente = db.Column(db.String(50))
+    status = db.Column(db.Integer, default=0)
+    estado_id = db.Column(db.String(50))
     lugar = db.Column(db.String(50))
-    tratamiento_id = db.Column(db.Integer, nullable=False)
+    tratamiento_id = db.Column(db.String(50))
 
     def __repr__(self):
         return 'Cita id: ' + str(self.id)
@@ -63,12 +63,21 @@ class Dentista(db.Model):
 db.create_all()
 
 # Routes
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    tratamientos = Tratamiento.query.order_by(Tratamiento.id).all()
-    estados = Estado.query.order_by(Estado.id).all()
-
-    return render_template('index.html',tratamientos=tratamientos,estados=estados)
+    if request.method == 'POST':
+        nombre_paciente = request.form['nombre_paciente']
+        tel_paciente = request.form['tel_paciente']
+        tratamiento_id = request.form['tratamiento_id']
+        estado_id = request.form['estado_id']
+        nueva_cita = Cita(nombre_paciente=nombre_paciente,tel_paciente=tel_paciente,tratamiento_id=tratamiento_id,estado_id=estado_id)
+        db.session.add(nueva_cita)
+        db.session.commit() 
+        return redirect('/')
+    else:
+        tratamientos = Tratamiento.query.order_by(Tratamiento.id).all()
+        estados = Estado.query.order_by(Estado.id).all()
+        return render_template('index.html',tratamientos=tratamientos,estados=estados)
 
 
 if __name__ == "__main__":
