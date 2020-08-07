@@ -33,7 +33,7 @@
 
                                     <!-- Tratamiento -->
                                     <label for="treatf1">Tratamiento: </label>
-                                    <select class="form-control" id="treatf1">
+                                    <select class="form-control" id="treatf1", pl>
                                         {% for tratamiento in tratamientos %}
                                             <option>{{tratamiento.nombre}}</option>
                                         {% endfor %}
@@ -64,14 +64,14 @@
 
                                                         <!-- Nombre modal -->
                                                         <label for="nombre_paciente">Nombre completo: </label>
-                                                        <input type="name" class="form-control" placeholder="Escriba su nombre aqui" id="nombre_paciente", name="nombre_paciente">
+                                                        <input type="name" class="form-control" placeholder="Escriba su nombre aqui" id="nombre_paciente", name="nombre_paciente", required>
                                                     </div>
 
                                                     <div class="form-group">
 
                                                         <!-- Tratamiento modal -->
-                                                        <label for="tratamiento_id">Tratamiento: </label>
-                                                        <select class="form-control" id="tratamiento_id", name="tratamiento_id">
+                                                        <label for="tratamiento">Tratamiento: </label>
+                                                        <select class="form-control" id="tratamiento", name="tratamiento", required>
                                                             {% for tratamiento in tratamientos %}
                                                                 <option>{{tratamiento.nombre}}</option>
                                                             {% endfor %}
@@ -81,15 +81,14 @@
                                                     <!-- Tel -->
                                                     <div class="form-group">
                                                         <label for="tel_paciente">Numero telefonico: </label>
-                                                        <input type="tel" class="form-control" id="tel_paciente" placeholder="Numero telefonico" autofocus, name="tel_paciente">
+                                                        <input type="tel" class="form-control" id="tel_paciente" placeholder="Numero telefonico" autofocus, name="tel_paciente", required>
                                                     </div>
                         
                                                     <!--Estado-->
-                                                    <div class="form-group" id="estado_id">
+                                                    <div class="form-group" id="estado">
                                                         <label for="estado">Estado: </label>
-                                                        <select class="form-control" id="estado_id", name="estado_id">
-                                                            <option disabled selected>Selecciona un estado</option>
-                                                            {% for estado in estados %}
+                                                        <select class="form-control" id="estado", name="estado"> 
+                                                            {% for estado in estados %}                                                          
                                                                 <option>{{estado.nombre}}</option>
                                                             {% endfor %}                           
                                                         </select>

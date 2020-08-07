@@ -39,12 +39,12 @@ class Lugar(db.Model):
 class Cita(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     dentista_id = db.Column(db.Integer)
-    nombre_paciente = db.Column(db.String(50))
-    tel_paciente = db.Column(db.String(50))
+    nombre_paciente = db.Column(db.String(50), nullable=False)
+    tel_paciente = db.Column(db.String(50), nullable=False)
     status = db.Column(db.Integer, default=0)
-    estado_id = db.Column(db.String(50))
+    estado_id = db.Column(db.Integer ,nullable=False)
     lugar = db.Column(db.String(50))
-    tratamiento_id = db.Column(db.String(50))
+    tratamiento_id = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):
         return 'Cita id: ' + str(self.id)
@@ -68,8 +68,13 @@ def index():
     if request.method == 'POST':
         nombre_paciente = request.form['nombre_paciente']
         tel_paciente = request.form['tel_paciente']
-        tratamiento_id = request.form['tratamiento_id']
-        estado_id = request.form['estado_id']
+        # Tomamos los str
+        tratamiento = request.form['tratamiento']
+        estado = request.form['estado']
+        # Los convertimos a Int
+        tratamiento_id=Tratamiento.query.filter_by(nombre=tratamiento).first().id
+        estado_id=Estado.query.filter_by(nombre=estado).first().id
+        # Creamos la nueva cita
         nueva_cita = Cita(nombre_paciente=nombre_paciente,tel_paciente=tel_paciente,tratamiento_id=tratamiento_id,estado_id=estado_id)
         db.session.add(nueva_cita)
         db.session.commit() 

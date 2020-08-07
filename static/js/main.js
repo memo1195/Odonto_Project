@@ -9,7 +9,7 @@ $("#button-modal").click(function(){
 
     //  Tratamiento
     let t1 = document.getElementById("treatf1");
-    let t2 = document.getElementById("tratamiento_id");
+    let t2 = document.getElementById("tratamiento");
     t2.value = t1.value;
 });
 
