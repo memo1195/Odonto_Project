@@ -87,7 +87,7 @@ def index():
 
 @app.route('/paciente_search', methods=['GET', 'POST'])
 def paciente_search():
-    citas = Cita.query.filter_by(status = 0).all()
+    citas = Cita.query.filter((Cita.status == 0) | (Cita.status ==3)).all()
     return render_template('paciente_search.html',citas=citas)
 
 

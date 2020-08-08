@@ -5,10 +5,29 @@
 {% endblock %}
 
 {% block body %}
-<br><br><br>
+<br><br><br><br>
 
-    {% for cita in citas %}
-        <option>{{cita.nombre_paciente}}</option>
-    {% endfor %}
+    <h1>Citas disponibles</h1>
+    <br><br>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Cita</th>
+            <th scope="col">Tratamiento</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for cita in citas %}
+
+          <tr>
+            <th scope="row">{{cita.id}}</th>
+            <td>{{cita.tratamiento_id}}</td>
+            <td>{{cita.status}}</td>
+          </tr>
+
+        {% endfor %}
+        </tbody>
+      </table>
 
 {% endblock %}
