@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Buscar Pacientes</title>
+{% endblock %}
+
+{% block body %}
+<br><br><br>
+
+    {% for cita in citas %}
+        <option>{{cita.nombre_paciente}}</option>
+    {% endfor %}
+
+{% endblock %}

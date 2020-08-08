@@ -41,6 +41,7 @@ class Cita(db.Model):
     dentista_id = db.Column(db.Integer)
     nombre_paciente = db.Column(db.String(50), nullable=False)
     tel_paciente = db.Column(db.String(50), nullable=False)
+    # [0=Libre, 1=Pendiente, 2=Confirmada, 3=Cancelada]
     status = db.Column(db.Integer, default=0)
     estado_id = db.Column(db.Integer ,nullable=False)
     lugar = db.Column(db.String(50))
@@ -83,6 +84,11 @@ def index():
         tratamientos = Tratamiento.query.order_by(Tratamiento.id).all()
         estados = Estado.query.order_by(Estado.id).all()
         return render_template('index.html',tratamientos=tratamientos,estados=estados)
+
+@app.route('/paciente_search', methods=['GET', 'POST'])
+def paciente_search():
+    citas = Cita.query.filter_by(status = 0).all()
+    return render_template('paciente_search.html',citas=citas)
 
 
 if __name__ == "__main__":
