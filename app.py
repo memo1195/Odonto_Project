@@ -88,8 +88,16 @@ def index():
 @app.route('/paciente_search', methods=['GET', 'POST'])
 def paciente_search():
     citas = Cita.query.filter((Cita.status == 0) | (Cita.status ==3)).all()
-    return render_template('paciente_search.html',citas=citas)
+    # Traduccion del status
+    status = {
+        0 : "Libre",
+        1 : "Pendiente",
+        2 : "Confirmada",
+        3 : "Cancelada"
+    }
+    tratamientos = Tratamiento.query.order_by(Tratamiento.id).all()
+    return render_template('paciente_search.html',citas=citas, status=status, tratamientos=tratamientos)
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True)       

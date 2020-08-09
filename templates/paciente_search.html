@@ -18,14 +18,14 @@
           </tr>
         </thead>
         <tbody>
+        <!-- Ponemos los datos de la BD -->
         {% for cita in citas %}
-
-          <tr>
+        <tr>
             <th scope="row">{{cita.id}}</th>
-            <td>{{cita.tratamiento_id}}</td>
-            <td>{{cita.status}}</td>
-          </tr>
-
+            <!-- Traducciones -->
+            <td>{{tratamientos[(cita.tratamiento_id)-1].nombre}}</td>
+            <td>{{status[cita.status]}}</td>
+        </tr>
         {% endfor %}
         </tbody>
       </table>
