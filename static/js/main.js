@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-//  Pasar datos del form al modal 
+//  Pasar datos del form al modal INDEX
 $("#button-modal").click(function(){
     //  Nombre
     let namef1 = document.getElementById("namef1");
@@ -9,7 +9,7 @@ $("#button-modal").click(function(){
 
     //  Tratamiento
     let t1 = document.getElementById("treatf1");
-    let t2 = document.getElementById("tratamiento");
+    let t2 = document.getElementById("tratamiento_id");
     t2.value = t1.value;
 });
 

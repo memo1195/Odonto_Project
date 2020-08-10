@@ -35,7 +35,7 @@
                                     <label for="treatf1">Tratamiento: </label>
                                     <select class="form-control" id="treatf1", pl>
                                         {% for tratamiento in tratamientos %}
-                                            <option>{{tratamiento.nombre}}</option>
+                                            <option value={{tratamiento.id}}>{{tratamiento.nombre}}</option>
                                         {% endfor %}
                                     </select>
                                 </div> 
@@ -71,9 +71,9 @@
 
                                                         <!-- Tratamiento modal -->
                                                         <label for="tratamiento">Tratamiento: </label>
-                                                        <select class="form-control" id="tratamiento", name="tratamiento", required>
+                                                        <select class="form-control" id="tratamiento_id", name="tratamiento_id", required>
                                                             {% for tratamiento in tratamientos %}
-                                                                <option>{{tratamiento.nombre}}</option>
+                                                                <option value={{tratamiento.id}}>{{tratamiento.nombre}}</option>
                                                             {% endfor %}
                                                         </select>
                                                     </div> 
@@ -87,9 +87,9 @@
                                                     <!--Estado-->
                                                     <div class="form-group" id="estado">
                                                         <label for="estado">Estado: </label>
-                                                        <select class="form-control" id="estado", name="estado"> 
+                                                        <select class="form-control" id="estado_id", name="estado_id"> 
                                                             {% for estado in estados %}                                                          
-                                                                <option>{{estado.nombre}}</option>
+                                                                <option value={{estado.id}}>{{estado.nombre}}</option>
                                                             {% endfor %}                           
                                                         </select>
                                                     </div> 

@@ -9,25 +9,66 @@
 
     <h1>Citas disponibles</h1>
     <br><br>
-    <table class="table">
+
+    <!-- Filtro -->
+    <div>
+      <form class="form-inline" action='/paciente_search' method='POST' >
+
+        <!-- Estado -->
+        <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Estado</label>
+        <select class="form-control my-1 mr-sm-2" id="estado_id" name="estado_id">
+          <option value="default" selected>Sin restricciones</option>
+          {% for estado in estados %}
+          <option value={{estado.id}}>{{estado.nombre}}</option>
+          {% endfor %}
+        </select>
+
+        <!-- Tratamiento -->
+        <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Tratamiento</label>
+        <select class="form-control my-1 mr-sm-2" id="tratamiento_id" name="tratamiento_id">
+          <option value="default" selected>Sin restricciones</option> 
+          {% for tratamiento in tratamientos %}
+          <option value={{tratamiento.id}}>{{tratamiento.nombre}}</option>
+          {% endfor %}
+        </select>
+            
+        <button type="submit" class="btn btn-primary my-1">Filtrar</button>
+      </form>
+    </div>
+
+    <br><br>
+
+    <!-- Tabla de citas -->
+    <div>
+      <table class="table">
+        <!-- Indices -->
         <thead>
           <tr>
             <th scope="col">Cita</th>
             <th scope="col">Tratamiento</th>
+            <th scope="col">Estado</th>
             <th scope="col">Status</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
+
         <!-- Ponemos los datos de la BD -->
         {% for cita in citas %}
         <tr>
             <th scope="row">{{cita.id}}</th>
+
             <!-- Traducciones -->
             <td>{{tratamientos[(cita.tratamiento_id)-1].nombre}}</td>
-            <td>{{status[cita.status]}}</td>
+            <td>{{ estados[(cita.estado_id)-1].nombre }}</td>
+            <td>{{ status_citas[(cita.status_id)-1].desc }}</td>
+
+            <td><button type="button" class="btn btn-primary">Agendar</button></td>
+            
         </tr>
         {% endfor %}
         </tbody>
       </table>
+    </div>
 
 {% endblock %}

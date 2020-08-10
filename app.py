@@ -8,7 +8,9 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
-# Model
+############
+
+# Model #
 
 # Tratamiento
 class Tratamiento(db.Model):
@@ -26,6 +28,14 @@ class Estado(db.Model):
     def __repr__(self):
         return 'Estado id: ' + str(self.id)
 
+# Status_cita
+class Status_cita(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    desc = db.Column(db.String(50), unique=True, nullable =False)
+
+    def __repr__(self):
+        return self.desc
+
 # Lugar
 class Lugar(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -42,7 +52,7 @@ class Cita(db.Model):
     nombre_paciente = db.Column(db.String(50), nullable=False)
     tel_paciente = db.Column(db.String(50), nullable=False)
     # [0=Libre, 1=Pendiente, 2=Confirmada, 3=Cancelada]
-    status = db.Column(db.Integer, default=0)
+    status_id = db.Column(db.Integer, default=1)
     estado_id = db.Column(db.Integer ,nullable=False)
     lugar = db.Column(db.String(50))
     tratamiento_id = db.Column(db.Integer, nullable=False)
@@ -60,43 +70,88 @@ class Dentista(db.Model):
     def __repr__(self):
         return 'Dentista id: ' + str(self.id)
 
-
+# Creamos la DB
 db.create_all()
 
-# Routes
+############
+
+# Routes #
+
+# Index
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    if request.method == 'POST':
+    if request.method == 'POST': # Cuando se agrega una nueva cita
+
+        # Asignamos valores del form
         nombre_paciente = request.form['nombre_paciente']
         tel_paciente = request.form['tel_paciente']
-        # Tomamos los str
-        tratamiento = request.form['tratamiento']
-        estado = request.form['estado']
-        # Los convertimos a Int
-        tratamiento_id=Tratamiento.query.filter_by(nombre=tratamiento).first().id
-        estado_id=Estado.query.filter_by(nombre=estado).first().id
+        tratamiento_id=request.form['tratamiento_id']
+        estado_id=request.form['estado_id']
+
         # Creamos la nueva cita
         nueva_cita = Cita(nombre_paciente=nombre_paciente,tel_paciente=tel_paciente,tratamiento_id=tratamiento_id,estado_id=estado_id)
+
+        # La agregamos a la DB
         db.session.add(nueva_cita)
         db.session.commit() 
+
+        # F5
         return redirect('/')
-    else:
+    else: # Cuando no se intenta agregar una nueva cita
+
+        # Cargamos las traducciones para el form
         tratamientos = Tratamiento.query.order_by(Tratamiento.id).all()
         estados = Estado.query.order_by(Estado.id).all()
+
+        # Se carga la pagina
         return render_template('index.html',tratamientos=tratamientos,estados=estados)
 
+# Buscar Paciente
 @app.route('/paciente_search', methods=['GET', 'POST'])
 def paciente_search():
-    citas = Cita.query.filter((Cita.status == 0) | (Cita.status ==3)).all()
-    # Traduccion del status
-    status = {
-        0 : "Libre",
-        1 : "Pendiente",
-        2 : "Confirmada",
-        3 : "Cancelada"
-    }
-    tratamientos = Tratamiento.query.order_by(Tratamiento.id).all()
-    return render_template('paciente_search.html',citas=citas, status=status, tratamientos=tratamientos)
+
+    if request.method == 'POST': # Cuando se aplica el filtro
+
+        # Cargamos las traducciones por ID para el form
+        tratamientos = Tratamiento.query.order_by(Tratamiento.id).all()
+        estados = Estado.query.order_by(Estado.id).all()
+        status_citas = Status_cita.query.order_by(Status_cita.id).all()
+
+        # Asignamos los valores del form a las variables
+        tratamiento_id = request.form['tratamiento_id']
+        estado_id = request.form['estado_id']
+
+        # Creamos los filtros con las variables
+        filter_tratamiento = (Cita.tratamiento_id == tratamiento_id)
+        filter_estado = (Cita.estado_id == estado_id)
+        filter_status = (Cita.status_id == 1) | (Cita.status_id ==4)
+
+        # Unimos los filtros en uno solo
+        if (tratamiento_id == 'default') and (estado_id == 'default'):
+            filter_citas = filter_status
+        elif tratamiento_id == 'default':
+            filter_citas = filter_status & filter_estado
+        elif estado_id == 'default':
+            filter_citas = filter_status & filter_tratamiento
+        else:
+            filter_citas = filter_status & filter_tratamiento & filter_estado
+        
+        # Filtramos todas las citas con nuestro filtro creado
+        citas = Cita.query.filter(filter_citas).all()
+
+        return render_template('paciente_search.html',citas=citas, tratamientos=tratamientos, estados=estados, status_citas=status_citas)
+    
+    else: # Cuando se abre la pagina sin aplicar filtro
+
+        # Cargamos las traducciones para el form
+        tratamientos = Tratamiento.query.order_by(Tratamiento.id).all()
+        estados = Estado.query.order_by(Estado.id).all()
+        status_citas = Status_cita.query.order_by(Status_cita.id).all()
+
+        # Cargamos todas las citas que esten libres o canceladas
+        citas = Cita.query.filter((Cita.status_id == 1) | (Cita.status_id ==4)).all()
+
+        return render_template('paciente_search.html',citas=citas, tratamientos=tratamientos, estados=estados, status_citas=status_citas)
 
 
 if __name__ == "__main__":
